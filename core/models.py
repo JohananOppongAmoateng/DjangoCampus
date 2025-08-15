@@ -1,4 +1,3 @@
-from secrets import choice
 from django.db import models
 
 # Create your models here.
@@ -19,7 +18,7 @@ class WorkShop(models.Model):
         verbose_name = "Workshop"
         verbose_name_plural = "Workshops"
         ordering = ['workshop_date']
-        table_name = 'workshops'
+        # table_name = 'workshops'
         
     def __str__(self):
         return f"{self.workshop_name} - {self.workshop_date}"
@@ -29,7 +28,7 @@ class WorkShop(models.Model):
 
 #Experience in django
 
-class DjangoExperience(choice.Choices):
+class DjangoExperience(models.TextChoices):
     BEGINNER = 'Beginner'
     INTERMEDIATE = 'Intermediate'
     ADVANCED = 'Advanced'
@@ -52,7 +51,7 @@ class WorkshopRegistration(models.Model):
         verbose_name = "Workshop Registration"
         verbose_name_plural = "Workshop Registrations"
         ordering = ['registration_date']
-        table_name = 'workshop_registrations'
+        # table_name = 'workshop_registrations'
         
     def __str__(self):
         return f"{self.user_name} registered for {self.workshop.workshop_name}"
