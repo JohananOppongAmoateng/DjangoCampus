@@ -3,15 +3,18 @@ from django.db import models
 # Create your models here.
 
 
-# Models to to add what you'll learn 
+# a variable where you image will be stored
 
+WORKSHOP_IMAGE_UPLOAD_PATH = 'header/workshop_images/'
     
 # Model to add workshops
 class WorkShop(models.Model):
+    workshop_image_header = models.ImageField(upload_to=WORKSHOP_IMAGE_UPLOAD_PATH, null=True, blank=True, verbose_name="Workshop Image Header")
     workshop_name = models.CharField(max_length=255, verbose_name="Workshop Name", null=False, blank=False)
     workshop_date = models.DateField(verbose_name="Workshop Date", null=False, blank=False)
     workshop_location = models.CharField(max_length=255, verbose_name="Workshop Location", null=False, blank=False)
     workshop_description = models.TextField(verbose_name="Workshop Description", null=True, blank=True)
+    is_ended = models.BooleanField(default=False, verbose_name="Is Ended")
     
     
     class Meta:
@@ -38,6 +41,7 @@ class WorkshopRegistration(models.Model):
     workshop = models.ForeignKey(WorkShop, on_delete=models.CASCADE, related_name='registrations', verbose_name="Workshop")
     user_name = models.CharField(max_length=255, verbose_name="User Name", null=False, blank=False)
     user_email = models.EmailField(verbose_name="User Email", null=False, blank=False)
+    phone_number = models.CharField(max_length=13, verbose_name="Phone Number", blank=True, null=True)
     will_attend_physical = models.BooleanField(default=True, verbose_name="Will Attend Physically")
     django_experience = models.CharField(
         max_length=20,
@@ -51,7 +55,7 @@ class WorkshopRegistration(models.Model):
         verbose_name = "Workshop Registration"
         verbose_name_plural = "Workshop Registrations"
         ordering = ['registration_date']
-        # table_name = 'workshop_registrations'
+        unique_together = ['workshop', 'user_email']  # Prevents duplicate registrations
         
     def __str__(self):
         return f"{self.user_name} registered for {self.workshop.workshop_name}"

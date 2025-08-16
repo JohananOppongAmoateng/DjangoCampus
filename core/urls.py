@@ -17,7 +17,7 @@ urlpatterns = [
     path('api/registrations/',
          views.WorkshopRegistrationListView.as_view(),
          name='registration-list'),
-    path('api/registrations/create/',
+    path('api/workshops/register/ ',
          views.WorkshopRegistrationCreateView.as_view(),
          name='register-workshop'),
     path('api/registrations/<int:pk>/',

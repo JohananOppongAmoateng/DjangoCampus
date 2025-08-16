@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 from core.serializers import (
@@ -6,41 +5,74 @@ from core.serializers import (
     WorkshopRegistrationSerializer,
     WorkShopListSerializer
 )
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from core.models import WorkShop, WorkshopRegistration
-
+from rest_framework.permissions import AllowAny, IsAuthenticated
 # Create your views here.
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="List all workshops",
+        description="Retrieve a list of all available workshops",
+        tags=["Workshops"]
+    )
+)
 class WorkshopListView(generics.ListAPIView):
     """
     API view to retrieve list of all workshops.
     """
     queryset = WorkShop.objects.all()
     serializer_class = WorkShopListSerializer
+    permission_classes = [AllowAny]
 
-
+@extend_schema_view(
+    get=extend_schema(
+        summary="Get workshop details",
+        description="Retrieve detailed information about a specific workshop",
+        tags=["Workshops"]
+    )
+)
 class WorkshopDetailView(generics.RetrieveAPIView):
     """
     API view to retrieve a single workshop by ID.
     """
     queryset = WorkShop.objects.all()
     serializer_class = WorkShopSerializer
+    permission_classes = [AllowAny]
+    
 
-
+@extend_schema_view(
+    post=extend_schema(
+        summary="Create new workshop",
+        description="Create a new workshop (admin only)",
+        tags=["Workshops"]
+    )
+)
 class WorkshopCreateView(generics.CreateAPIView):
     """
     API view to create a new workshop.
     """
     queryset = WorkShop.objects.all()
     serializer_class = WorkShopSerializer
+    permission_classes = [AllowAny]
+    
 
-
+@extend_schema_view(
+    post=extend_schema(
+        summary="Register for workshop",
+        description="Register a user for a specific workshop",
+        tags=["Workshop Registration"]
+    )
+)
 class WorkshopRegistrationCreateView(generics.CreateAPIView):
     """
     API view to register for a workshop.
     """
     queryset = WorkshopRegistration.objects.all()
     serializer_class = WorkshopRegistrationSerializer
+    permission_classes = [AllowAny]
+    
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -67,13 +99,20 @@ class WorkshopRegistrationCreateView(generics.CreateAPIView):
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@extend_schema_view(
+    get=extend_schema(
+        summary="List all registrations",
+        description="Retrieve a list of all workshop registrations",
+        tags=["Workshop Registration"]
+    )
+)
 class WorkshopRegistrationListView(generics.ListAPIView):
     """
     API view to retrieve list of all workshop registrations.
     """
     queryset = WorkshopRegistration.objects.all()
     serializer_class = WorkshopRegistrationSerializer
+    permission_classes = [AllowAny]
 
 
 class WorkshopRegistrationDetailView(generics.RetrieveAPIView):
@@ -82,6 +121,7 @@ class WorkshopRegistrationDetailView(generics.RetrieveAPIView):
     """
     queryset = WorkshopRegistration.objects.all()
     serializer_class = WorkshopRegistrationSerializer
+    permission_classes = [AllowAny]
 
 
 class WorkshopRegistrationsForWorkshopView(generics.ListAPIView):
@@ -89,6 +129,7 @@ class WorkshopRegistrationsForWorkshopView(generics.ListAPIView):
     API view to retrieve all registrations for a specific workshop.
     """
     serializer_class = WorkshopRegistrationSerializer
+    permission_classes = [AllowAny]
     
     def get_queryset(self):
         workshop_id = self.kwargs['workshop_id']

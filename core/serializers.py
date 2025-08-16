@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core.models import WorkShop, WorkshopRegistration
+from drf_spectacular.utils import extend_schema_field
 
 
 class WorkShopSerializer(serializers.ModelSerializer):
@@ -11,11 +12,12 @@ class WorkShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkShop
         fields = [
-            'id', 'workshop_name', 'workshop_date', 'workshop_location',
-            'workshop_description', 'registrations_count'
+            'id', 'workshop_image_header', 'workshop_name', 'workshop_date', 'workshop_description', 'workshop_location',
+            'is_ended', 'registrations_count'
         ]
         read_only_fields = ['id']
     
+    @extend_schema_field(serializers.IntegerField)
     def get_registrations_count(self, obj):
         """Get the total number of registrations for this workshop."""
         return obj.registrations.count()
@@ -36,7 +38,7 @@ class WorkshopRegistrationSerializer(serializers.ModelSerializer):
         model = WorkshopRegistration
         fields = [
             'id', 'workshop', 'workshop_name', 'workshop_date', 'user_name',
-            'user_email', 'will_attend_physical', 'django_experience',
+            'user_email', 'phone_number', 'will_attend_physical', 'django_experience',
             'registration_date'
         ]
         read_only_fields = [
@@ -73,11 +75,12 @@ class WorkShopListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkShop
         fields = [
-            'id', 'workshop_name', 'workshop_date', 'workshop_location',
-            'registrations_count'
+            'id', 'workshop_image_header', 'workshop_name', 'workshop_date', 'workshop_description', 'workshop_location',
+            'is_ended', 'registrations_count'
         ]
         read_only_fields = ['id']
     
+    @extend_schema_field(serializers.IntegerField)
     def get_registrations_count(self, obj):
         """Get the total number of registrations for this workshop."""
         return obj.registrations.count()
