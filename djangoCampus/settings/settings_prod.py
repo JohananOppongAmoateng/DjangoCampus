@@ -7,12 +7,12 @@ from .settings_base import *  # Import base settings  # noqa: E402,F403,F401
 from .settings_base import BASE_DIR  # noqa: E402
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-fallback-key-change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = ["djangocampus.pythonanywhere.com", "localhost", "127.0.0.1"]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -50,7 +50,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # Add CORS settings for your Next.js frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Development
-    "https://django-campus.vercel.app/",  # Production
+    "https://django-campus.vercel.app",  # Production
 ]
 
 CORS_ALLOW_CREDENTIALS = True
