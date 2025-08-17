@@ -50,7 +50,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # Add CORS settings for your Next.js frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Development
-    "https://django-campus.vercel.app",  # Production
+    "https://djangocampus.vercel.app",  # Production
 ]
 
 CORS_ALLOW_CREDENTIALS = True
