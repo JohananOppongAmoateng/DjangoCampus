@@ -26,6 +26,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),  # DRF auth URLs
     path("", include("core.urls")),
     path("", include("teams.urls")),  # Include URLs from the teams app
+    path("", include("partners.urls")),  # Include URLs from the partners app
     # API DOCUMENTATION
     path("api/schemas/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),

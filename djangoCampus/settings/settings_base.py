@@ -36,6 +36,7 @@ INSTALLED_APPS += [
     "drf_spectacular",
     "corsheaders",  # For handling CORS
     "teams",
+    "partners",
     # "drf_spectacular_sidecar",  # For serving static files for API documentation
 ]
 
