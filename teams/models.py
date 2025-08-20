@@ -19,7 +19,7 @@ class TeamModel(models.Model):
     class Meta:
         verbose_name = "Team Member"
         verbose_name_plural = "Team Members"
-        ordering = ['fullName']
+        ordering = ['id']
 
 
 
