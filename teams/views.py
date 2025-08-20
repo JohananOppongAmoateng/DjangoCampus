@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from teams.serializers import TeamSerializer, SocialSerializer
 from teams.models import TeamModel, SocialModel
 from rest_framework import generics, status
 from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from drf_spectacular.utils import (
     extend_schema,
@@ -35,6 +35,7 @@ class TeamListCreateView(generics.ListCreateAPIView):
         is_active=True
     )
     serializer_class = TeamSerializer
+    permission_classes = [AllowAny]
 
 
 @extend_schema_view(
@@ -69,6 +70,8 @@ class TeamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = TeamModel.objects.prefetch_related('socials').all()
     serializer_class = TeamSerializer
+    permission_classes = [AllowAny]
+    
 
 
 @extend_schema_view(
@@ -86,6 +89,7 @@ class ActiveTeamMembersView(generics.ListAPIView):
         is_active=True
     )
     serializer_class = TeamSerializer
+    permission_classes = [AllowAny]
 
 
 @extend_schema_view(
@@ -106,6 +110,8 @@ class SocialListCreateView(generics.ListCreateAPIView):
     """
     queryset = SocialModel.objects.select_related('team').all()
     serializer_class = SocialSerializer
+    permission_classes = [AllowAny]
+    
 
 
 @extend_schema_view(
@@ -136,6 +142,8 @@ class SocialRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = SocialModel.objects.select_related('team').all()
     serializer_class = SocialSerializer
+    permission_classes = [AllowAny]
+    
 
 
 @extend_schema(
@@ -160,6 +168,8 @@ class TeamMemberSocialsView(generics.ListAPIView):
     team member.
     """
     serializer_class = SocialSerializer
+    permission_classes = [AllowAny]
+    
 
     def get_queryset(self):
         team_id = self.kwargs['team_id']
@@ -190,6 +200,8 @@ class TeamMembersByPlatformView(generics.ListAPIView):
     API endpoint for getting team members by social media platform.
     """
     serializer_class = TeamSerializer
+    permission_classes = [AllowAny]
+    
 
     def get_queryset(self):
         platform = self.kwargs['platform']
