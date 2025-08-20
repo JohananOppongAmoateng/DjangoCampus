@@ -24,7 +24,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),  # DRF auth URLs
-    path("", include("core.urls")),  # Include URLs from the core app
+    path("", include("core.urls")),
+    path("", include("teams.urls")),  # Include URLs from the teams app
     # API DOCUMENTATION
     path("api/schemas/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
