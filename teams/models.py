@@ -12,6 +12,9 @@ class TeamModel(models.Model):
     image = models.ImageField(upload_to='team_images/', blank=True, null=True, verbose_name="Profile Image")
     is_active = models.BooleanField(default=True, verbose_name="Is Active")
     join_date = models.DateField(auto_now_add=True, verbose_name="Join Date")
+    order = models.PositiveIntegerField(
+        default=0, verbose_name="Display Order"
+    )
     
     def __str__(self):
         return f"{self.fullName} - {self.position}"
@@ -19,12 +22,10 @@ class TeamModel(models.Model):
     class Meta:
         verbose_name = "Team Member"
         verbose_name_plural = "Team Members"
-        ordering = ['id']
+        ordering = ['order', 'id']
 
 
-
-
-#Models for Socials
+# Models for Socials
 class SocialModel(models.Model):
     PLATFORM_CHOICES = [
         ('linkedin', 'LinkedIn'),
