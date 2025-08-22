@@ -27,6 +27,7 @@ urlpatterns = [
     path("", include("core.urls")),
     path("", include("teams.urls")),  # Include URLs from the teams app
     path("", include("partners.urls")),  # Include URLs from the partners app
+    path("", include("newsletter.urls")),  # Include URLs from the newsletter app
     # API DOCUMENTATION
     path("api/schemas/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
