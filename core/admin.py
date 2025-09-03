@@ -52,6 +52,7 @@ class WorkShopAdmin(admin.ModelAdmin):
     list_display = (
         'workshop_name', 
         'workshop_date', 
+        'workshop_time',
         'workshop_location', 
         'is_ended', 
         'get_registrations_count',
@@ -65,7 +66,7 @@ class WorkShopAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Workshop Information', {
-            'fields': ('workshop_name', 'workshop_date', 'workshop_location', 'workshop_description')
+            'fields': ('workshop_name', 'workshop_date', 'workshop_time', 'workshop_location', 'workshop_description')
         }),
         ('Media', {
             'fields': ('workshop_image_header',)

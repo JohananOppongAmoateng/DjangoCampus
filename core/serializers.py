@@ -12,7 +12,7 @@ class WorkShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkShop
         fields = [
-            'id', 'workshop_image_header', 'workshop_name', 'workshop_date', 'workshop_description', 'workshop_location',
+            'id', 'workshop_image_header', 'workshop_name', 'workshop_date','workshop_time', 'workshop_description', 'workshop_location',
             'is_ended', 'registrations_count'
         ]
         read_only_fields = ['id']
@@ -33,11 +33,14 @@ class WorkshopRegistrationSerializer(serializers.ModelSerializer):
     workshop_date = serializers.DateField(
         source='workshop.workshop_date', read_only=True
     )
-    
+    workshop_time = serializers.TimeField(
+        source='workshop.workshop_time', read_only=True
+    )
+
     class Meta:
         model = WorkshopRegistration
         fields = [
-            'id', 'workshop', 'workshop_name', 'workshop_date', 'user_name',
+            'id', 'workshop', 'workshop_name', 'workshop_date', 'workshop_time', 'user_name',
             'user_email', 'phone_number', 'will_attend_physical', 'django_experience',
             'registration_date'
         ]
@@ -75,7 +78,7 @@ class WorkShopListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkShop
         fields = [
-            'id', 'workshop_image_header', 'workshop_name', 'workshop_date', 'workshop_description', 'workshop_location',
+            'id', 'workshop_image_header', 'workshop_name', 'workshop_date', 'workshop_time', 'workshop_description', 'workshop_location',
             'is_ended', 'registrations_count'
         ]
         read_only_fields = ['id']

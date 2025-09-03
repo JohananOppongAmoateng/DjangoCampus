@@ -12,6 +12,7 @@ class WorkShop(models.Model):
     workshop_image_header = models.ImageField(upload_to=WORKSHOP_IMAGE_UPLOAD_PATH, null=True, blank=True, verbose_name="Workshop Image Header")
     workshop_name = models.CharField(max_length=255, verbose_name="Workshop Name", null=False, blank=False)
     workshop_date = models.DateField(verbose_name="Workshop Date", null=False, blank=False)
+    workshop_time = models.TimeField(verbose_name="Workshop Time", null=True, blank=True)
     workshop_location = models.CharField(max_length=255, verbose_name="Workshop Location", null=False, blank=False)
     workshop_description = models.TextField(verbose_name="Workshop Description", null=True, blank=True)
     is_ended = models.BooleanField(default=False, verbose_name="Is Ended")
