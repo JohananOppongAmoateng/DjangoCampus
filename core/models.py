@@ -21,7 +21,7 @@ class WorkShop(models.Model):
     class Meta:
         verbose_name = "Workshop"
         verbose_name_plural = "Workshops"
-        ordering = ['workshop_date']
+        ordering = ['-workshop_date', '-id']  
         # table_name = 'workshops'
         
     def __str__(self):
