@@ -51,7 +51,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Development
     "https://djangocampus.vercel.app",
-    "https://www.djangocampus.tech"
+    "https://www.djangocampus.tech",
+    "https://djangocampus.tech",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
