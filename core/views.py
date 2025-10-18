@@ -8,6 +8,7 @@ from core.serializers import (
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from core.models import WorkShop, WorkshopRegistration
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from core.email_utils import send_workshop_registration_email
 # Create your views here.
 
 
@@ -73,7 +74,6 @@ class WorkshopRegistrationCreateView(generics.CreateAPIView):
     serializer_class = WorkshopRegistrationSerializer
     permission_classes = [AllowAny]
     
-    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -90,14 +90,28 @@ class WorkshopRegistrationCreateView(generics.CreateAPIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
-            self.perform_create(serializer)
+            # Save the registration
+            registration = serializer.save()
+            
+            # Send confirmation email with calendar invite
+            email_sent = send_workshop_registration_email(registration)
+            
             headers = self.get_success_headers(serializer.data)
+            
+            response_data = serializer.data
+            response_data['email_sent'] = email_sent
+            response_data['message'] = (
+                'Registration successful! '
+                'A confirmation email has been sent to your inbox.'
+            )
+            
             return Response(
-                serializer.data,
+                response_data,
                 status=status.HTTP_201_CREATED,
                 headers=headers
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @extend_schema_view(
     get=extend_schema(
