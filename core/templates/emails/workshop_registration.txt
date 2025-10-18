@@ -1,0 +1,58 @@
+================================================================================
+                        REGISTRATION CONFIRMED! 🎉
+================================================================================
+
+Hi {{ name }},
+
+Thank you for registering for our workshop! We're excited to have you join us 
+at Django Campus.
+
+================================================================================
+                           WORKSHOP DETAILS
+================================================================================
+
+{{ workshop.workshop_name }}
+
+📅 Date: {{ workshop.workshop_date|date:"F d, Y" }}
+{% if workshop.workshop_time %}🕐 Time: {{ workshop.workshop_time|time:"g:i A" }}
+{% endif %}📍 Location: {{ workshop.workshop_location }}
+👥 Attendance: {% if registration.will_attend_physical %}Physical{% else %}Virtual{% endif %}
+
+{% if workshop.workshop_description %}
+About this workshop:
+{{ workshop.workshop_description }}
+{% endif %}
+
+================================================================================
+                        ADD TO YOUR CALENDAR
+================================================================================
+
+Add to Google Calendar:
+{{ add_to_google_calendar_url }}
+
+💡 You can also use the attached .ics file to add this event to any calendar 
+application (Apple Calendar, Outlook, etc.).
+
+================================================================================
+                     YOUR REGISTRATION DETAILS
+================================================================================
+
+Name: {{ registration.user_name }}
+Email: {{ registration.user_email }}
+{% if registration.phone_number %}Phone: {{ registration.phone_number }}
+{% endif %}Experience Level: {{ registration.django_experience }}
+Attendance Type: {% if registration.will_attend_physical %}Physical{% else %}Virtual{% endif %}
+
+================================================================================
+
+If you have any questions or need to make changes to your registration, feel 
+free to reply to this email.
+
+We look forward to seeing you at the workshop!
+
+Best regards,
+The Django Campus Team
+
+---
+Django Campus - Empowering African Developers
+This is an automated message.

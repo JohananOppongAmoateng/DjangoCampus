@@ -56,7 +56,15 @@ class WorkshopRegistration(models.Model):
         verbose_name = "Workshop Registration"
         verbose_name_plural = "Workshop Registrations"
         ordering = ['registration_date']
-        unique_together = ['workshop', 'user_email']  # Prevents duplicate registrations
+        unique_together = ['workshop', 'user_email']
         
     def __str__(self):
         return f"{self.user_name} registered for {self.workshop.workshop_name}"
+    
+    def get_attendance_display(self):
+        """Return human-readable attendance type"""
+        return "Physical" if self.will_attend_physical else "Virtual"
+    
+    def get_experience_display(self):
+        """Return human-readable experience level"""
+        return self.django_experience
