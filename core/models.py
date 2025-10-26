@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 # Create your models here.
 
 
@@ -68,3 +69,19 @@ class WorkshopRegistration(models.Model):
     def get_experience_display(self):
         """Return human-readable experience level"""
         return self.django_experience
+
+
+@receiver(post_save, sender=WorkShop)
+def send_workshop_notification_to_previous_attendees(sender, instance, created, **kwargs):
+    """
+    Send notification emails to previous attendees when a new workshop is created.
+    """
+    if created:
+        previous_registrations = WorkshopRegistration.objects.filter(
+            workshop__workshop_date__lt=instance.workshop_date
+        ).distinct('user_email')
+        
+        for registration in previous_registrations:
+            # Here you would call your email sending function
+            from core.email_utils import send_workshop_notification_email
+            send_workshop_notification_email(registration.user_email, instance)
